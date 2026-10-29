@@ -232,7 +232,7 @@ export default function Home() {
       <a
         href="/resume.pdf"
         download
-        className="inline-flex items-center gap-2 rounded-full border border-lime-300/30 bg-lime-300 px-6 py-3.5 text-sm font-medium text-black transition hover:bg-lime-200"
+        className="inline-flex items-center gap-2 rounded-full border border-lime-300/40 bg-white/[0.04] px-6 py-3.5 text-sm font-medium text-white transition hover:bg-lime-300/10 hover:border-lime-300"
       >
         <Download size={17} />
         Download Resume
@@ -274,12 +274,21 @@ export default function Home() {
 
   {/* Right column: Hero visual */}
   <div className="relative mx-auto w-full max-w-[510px] lg:justify-self-end">
-    <HeroVisual />
-
-    <p className="mt-1 text-center text-[10px] uppercase tracking-[0.3em] text-neutral-600">
-      Creative thinking · Clean code · Continuous growth
-    </p>
+  <div className="relative mx-auto aspect-square w-full max-w-[360px] overflow-hidden rounded-full border border-lime-300/30 bg-neutral-900 shadow-[0_0_70px_rgba(190,242,100,0.10)]">
+    <Image
+      src="/mahdi.jpeg"
+      alt="Mahdi — Web Developer"
+      fill
+      priority
+      sizes="(max-width: 768px) 80vw, 360px"
+      className="object-cover"
+    />
   </div>
+
+  <p className="mt-5 text-center text-[10px] uppercase tracking-[0.3em] text-neutral-400">
+    Creative thinking · Clean code · Continuous growth
+  </p>
+</div>
 
   {/* Scroll indicator */}
   <a
