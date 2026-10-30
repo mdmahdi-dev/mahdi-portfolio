@@ -1,541 +1,301 @@
 
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { Download } from "lucide-react";
+import Link from "next/link";
+import {
+  ArrowDown,
+  ArrowRight,
+  ArrowUpRight,
+  Code2,
+  Download,
+  ExternalLink,
+  GraduationCap,
+  Mail,
+  MapPin,
+  Menu,
+  X,
+} from "lucide-react";
 
-const projects = [
-  {
-    number: "01",
-    title: "BazarDor",
-    category: "Price Tracking Platform",
-    description:
-      "A product price-tracking platform that helps people explore products and compare price changes over time.",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "API"],
-    image: "/projects/bazardor.png",
-    href: "https://bazardor-delta-seven.vercel.app/",
-    accent: "from-lime-300/20 via-emerald-400/5 to-transparent",
-  },
-  {
-    number: "02",
-    title: "Fit Log",
-    category: "Workout Management",
-    description:
-      "A workout library and fitness tracking experience designed to help users discover workouts and organize their training.",
-    tags: ["Next.js", "TypeScript", "React", "API"],
-    image: "/projects/fit-log.png",
-    href: "https://fit-log-rho-six.vercel.app/",
-    accent: "from-cyan-300/20 via-blue-400/5 to-transparent",
-  },
-  {
-    number: "03",
-    title: "Dev Stack Builder",
-    category: "Interactive Web App",
-    description:
-      "An interactive tool for exploring development technologies and building a personalized tech stack.",
-    tags: ["React", "JavaScript", "Tailwind CSS"],
-    image: "/projects/dev-stack-builder.png",
-    href: "https://dev-stack-two-flame.vercel.app/",
-    accent: "from-violet-300/20 via-fuchsia-400/5 to-transparent",
-  },
-];
-
-const skills = [
-  {
-    title: "Frontend",
-    items: ["HTML", "CSS", "JavaScript", "TypeScript", "React"],
-  },
-  {
-    title: "Frameworks",
-    items: ["Next.js", "Tailwind CSS", "Responsive Design"],
-  },
-  {
-    title: "Tools",
-    items: ["Git", "GitHub", "VS Code", "REST APIs", "Vercel"],
-  },
-];
-
-function ArrowUpRight({ size = 18 }: { size?: number }) {
+function GithubIcon({ size = 23 }: { size?: number }) {
   return (
     <svg
       width={size}
       height={size}
       viewBox="0 0 24 24"
-      fill="none"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
       <path
-        d="M7 17 17 7M7 7h10v10"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.05c-3.34.73-4.04-1.42-4.04-1.42-.55-1.39-1.33-1.76-1.33-1.76-1.09-.75.08-.74.08-.74 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.17 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.29-1.23 3.29-1.23.65 1.65.24 2.87.12 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.8 5.64-5.48 5.94.43.37.81 1.1.81 2.22v3.3c0 .32.22.7.83.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12Z"
       />
     </svg>
   );
 }
 
-function GithubIcon() {
+function LinkedinIcon({ size = 23 }: { size?: number }) {
   return (
     <svg
-      width="19"
-      height="19"
+      width={size}
+      height={size}
       viewBox="0 0 24 24"
       fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      <path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.54v-2.1c-3.1.67-3.76-1.31-3.76-1.31-.5-1.29-1.24-1.63-1.24-1.63-1.02-.7.08-.69.08-.69 1.12.08 1.71 1.15 1.71 1.15 1 .1.8 2.24 3.2 1.7.1-.73.39-1.23.7-1.52-2.48-.28-5.09-1.24-5.09-5.5 0-1.22.44-2.21 1.15-2.99-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.14a10.6 10.6 0 0 1 5.55 0c2.12-1.44 3.05-1.14 3.05-1.14.61 1.54.23 2.68.11 2.96.72.78 1.15 1.77 1.15 2.99 0 4.27-2.62 5.21-5.11 5.49.4.35.75 1.03.75 2.08v3.33c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z" />
+      <path d="M20.45 2H3.55C2.69 2 2 2.68 2 3.52v16.96c0 .84.69 1.52 1.55 1.52h16.9c.86 0 1.55-.68 1.55-1.52V3.52c0-.84-.69-1.52-1.55-1.52ZM7.93 18.45H4.96V9h2.97v9.45ZM6.45 7.71a1.72 1.72 0 1 1 0-3.44 1.72 1.72 0 0 1 0 3.44Zm12 10.74h-2.96v-4.6c0-1.1-.02-2.52-1.54-2.52-1.54 0-1.78 1.2-1.78 2.44v4.68H9.2V9h2.85v1.29h.04c.4-.75 1.37-1.54 2.82-1.54 3.02 0 3.58 1.99 3.58 4.57v5.13Z" />
     </svg>
   );
 }
 
+const projects = [
+  {
+    number: "01",
+    title: "BazarDor",
+    category: "Full-Stack Web Application",
+    description:
+      "A modern marketplace platform for exploring products, tracking prices, and discovering useful market information.",
+    image: "/projects/bazardor.png",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "API"],
+    live: "https://bazardor-delta-seven.vercel.app/",
+    github: "https://github.com/mdmahdi-dev",
+  },
+  {
+    number: "02",
+    title: "Fit Log",
+    category: "Fitness Tracking Application",
+    description:
+      "A workout library and fitness tracking experience designed to help users organize training and manage workout plans.",
+    image: "/projects/fit-log.png",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
+    live: "https://fit-log-rho-six.vercel.app/",
+    github: "https://github.com/mdmahdi-dev",
+  },
+  {
+    number: "03",
+    title: "Dev Stack Builder",
+    category: "React Web Application",
+    description:
+      "An interactive technology collection app where users can explore technologies and build their own development stack.",
+    image: "/projects/dev-stack-builder.png",
+    technologies: ["React", "TypeScript", "Tailwind CSS"],
+    live: "https://dev-stack-two-flame.vercel.app/",
+    github: "https://github.com/mdmahdi-dev",
+  },
+];
+
+const skills = [
+  "HTML",
+  "CSS",
+  "JavaScript",
+  "TypeScript",
+  "React",
+  "Next.js",
+  "Tailwind CSS",
+  "Git",
+  "GitHub",
+  "REST APIs",
+];
+
 function HeroVisual() {
   return (
-    <div className="hero-visual relative mx-auto aspect-square w-full max-w-[490px]">
-      <div className="absolute inset-[9%] rounded-full border border-white/[0.08]" />
-      <div className="absolute inset-[19%] rounded-full border border-white/[0.07]" />
-      <div className="absolute inset-[29%] rounded-full border border-white/[0.06]" />
+    <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+      <div className="relative aspect-square w-[90%] max-w-[440px]">
+        {/* Green glow */}
+        <div className="absolute inset-[15%] rounded-full bg-lime-300/10 blur-[75px]" />
 
-      <div className="hero-orbit absolute inset-[9%] rounded-full border border-dashed border-lime-200/20" />
+        {/* Orbit rings */}
+        <div className="absolute inset-[7%] rounded-full border border-lime-300/15" />
+        <div className="absolute inset-[15%] rounded-full border border-lime-300/20" />
 
-      <div className="hero-glow absolute left-1/2 top-1/2 h-[55%] w-[55%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-lime-300/10 blur-[65px]" />
+        <div className="absolute inset-[7%] animate-[spin_25s_linear_infinite] rounded-full border border-transparent border-t-lime-300/80 border-r-lime-300/20" />
 
-      <div className="hero-orb absolute left-1/2 top-1/2 flex h-[42%] w-[42%] -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-full border border-lime-100/20 bg-gradient-to-br from-lime-200 via-lime-400 to-emerald-800 shadow-[0_0_90px_rgba(190,242,100,0.18)]">
-        <div className="absolute inset-[8%] rounded-full border border-white/20" />
-        <div className="absolute -left-[15%] top-[5%] h-[65%] w-[65%] rounded-full bg-white/30 blur-2xl" />
-        <div className="absolute bottom-[5%] right-[5%] h-[70%] w-[70%] rounded-full bg-emerald-950/50 blur-2xl" />
+        {/* Orbit dots */}
+        <span className="absolute left-[10%] top-[25%] h-2 w-2 rounded-full bg-lime-300 shadow-[0_0_15px_#bef264]" />
+        <span className="absolute right-[9%] top-[48%] h-2 w-2 rounded-full bg-lime-300 shadow-[0_0_15px_#bef264]" />
+        <span className="absolute bottom-[14%] left-[25%] h-2 w-2 rounded-full bg-lime-300 shadow-[0_0_15px_#bef264]" />
 
-        <span className="relative text-5xl font-semibold tracking-tighter text-[#10130b] sm:text-6xl">
-          M.
-        </span>
-      </div>
-
-      <div className="float-card absolute left-[1%] top-[19%] rounded-2xl border border-white/10 bg-[#111315]/90 p-4 shadow-2xl backdrop-blur-xl sm:left-0">
-        <div className="flex items-center gap-3">
-          <span className="h-2 w-2 rounded-full bg-lime-300 shadow-[0_0_12px_rgba(190,242,100,0.8)]" />
-          <span className="text-xs text-neutral-300">Building for the web</span>
+        {/* Coding logo */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="flex h-28 w-28 items-center justify-center rounded-3xl border border-lime-300/20 bg-neutral-950/70 shadow-[0_0_70px_rgba(190,242,100,0.12)]">
+            <Code2
+              size={76}
+              strokeWidth={1.3}
+              className="text-lime-300"
+            />
+          </div>
         </div>
       </div>
+    </div>
+  );
+}
 
-      <div className="float-card-delayed absolute bottom-[19%] right-0 rounded-2xl border border-white/10 bg-[#111315]/90 p-4 shadow-2xl backdrop-blur-xl">
-        <p className="mb-2 text-[10px] uppercase tracking-[0.2em] text-neutral-500">
-          Current focus
-        </p>
-        <p className="text-sm font-medium text-white">Next.js + TypeScript</p>
-        <div className="mt-3 h-1 w-36 overflow-hidden rounded-full bg-white/10">
-          <div className="h-full w-[72%] rounded-full bg-lime-300" />
-        </div>
-      </div>
-
-      <div className="absolute right-[13%] top-[13%] h-3 w-3 rounded-full bg-lime-200 shadow-[0_0_25px_rgba(190,242,100,0.8)]" />
-      <div className="absolute bottom-[13%] left-[15%] h-2 w-2 rounded-full bg-lime-200/70" />
-      <div className="absolute left-[15%] top-[52%] h-1.5 w-1.5 rounded-full bg-white/70" />
+function SectionLabel({
+  number,
+  children,
+}: {
+  number: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="mb-5 flex items-center gap-4 text-xs font-medium uppercase tracking-[0.25em] text-lime-300">
+      <span>{number}</span>
+      <span className="h-px w-16 bg-lime-300/50" />
+      <span className="text-neutral-500">{children}</span>
     </div>
   );
 }
 
 export default function Home() {
+
   const [menuOpen, setMenuOpen] = useState(false);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    setVisible(true);
-  }, []);
-
-  const closeMenu = () => setMenuOpen(false);
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#08090b] text-[#f5f5f5]">
-      {/* Navigation */}
-      <header className="relative z-50 border-b border-white/[0.07]">
+    <main className="min-h-screen scroll-smooth bg-[#080a09] text-white">
+
+
+      {/* NAVBAR */}
+      <header className="sticky top-0 z-50 border-b border-white/[0.07] bg-[#080a09]/90 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8 lg:px-12">
-          <a
-            href="#home"
-            onClick={closeMenu}
-            className="flex items-center gap-3"
-            aria-label="Mahdi home"
-          >
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-lime-300 text-lg font-bold text-[#10130b]">
-              M.
+          <Link href="#home" className="flex items-center gap-3">
+            <Code2 size={34} className="text-lime-300" />
+            <span className="text-2xl font-bold tracking-tight">
+              Mahdi<span className="text-lime-300">.</span>
             </span>
-            <span className="text-sm font-semibold tracking-wide">
-              MAHDI<span className="text-lime-300">.</span>
-            </span>
-          </a>
+          </Link>
 
-          <div className="hidden items-center gap-9 md:flex">
-            <a className="nav-link" href="#about">
-              About
-            </a>
-            <a className="nav-link" href="#projects">
-              Projects
-            </a>
-            <a className="nav-link" href="#skills">
-              Skills
-            </a>
-            <a
-              href="#contact"
-              className="rounded-full border border-white/15 px-5 py-2.5 text-sm transition hover:border-lime-300 hover:bg-lime-300 hover:text-[#10130b]"
+          {/* DESKTOP NAVIGATION */}
+          <div className="hidden items-center gap-9 text-sm text-neutral-400 md:flex">
+            <Link className="transition hover:text-lime-300" href="#home">Home</Link>
+            <Link className="transition hover:text-lime-300" href="#about">About</Link>
+            <Link className="transition hover:text-lime-300" href="#projects">Projects</Link>
+            <Link className="transition hover:text-lime-300" href="#skills">Skills</Link>
+            <Link className="transition hover:text-lime-300" href="#contact">Contact</Link>
+          </div>
+
+          {/* DESKTOP LET'S TALK */}
+          <Link
+            href="#contact"
+            className="hidden rounded-full border border-lime-300/40 px-5 py-2.5 text-sm text-lime-300 transition hover:bg-lime-300 hover:text-black md:inline-flex"
+          >
+            Let's Talk
+          </Link>
+
+          {/* MOBILE HAMBURGER */}
+          <div className="relative md:hidden">
+            <button
+              type="button"
+              aria-label="Toggle navigation menu"
+              aria-controls="mobile-navigation-menu"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 text-lime-300 transition hover:bg-lime-300/10"
             >
-              Let&apos;s talk <span className="ml-2">↗</span>
-            </a>
-          </div>
+              {menuOpen ? <X size={25} /> : <Menu size={25} />}
+            </button>
 
-          <button
-            type="button"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((open) => !open)}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-xl md:hidden"
-          >
-            {menuOpen ? "×" : "☰"}
-          </button>
-        </nav>
+            {menuOpen && (
+              <div
+                id="mobile-navigation-menu"
+                className="absolute right-0 top-14 w-56 rounded-xl border border-white/10 bg-[#101411] p-3 shadow-2xl"
+              >
+                {[
+                  { label: "Home", href: "#home" },
+                  { label: "About", href: "#about" },
+                  { label: "Projects", href: "#projects" },
+                  { label: "Skills", href: "#skills" },
+                  { label: "Contact", href: "#contact" },
+                ].map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="block rounded-lg px-4 py-3 text-sm text-neutral-300 transition hover:bg-lime-300/10 hover:text-lime-300"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
 
-        {menuOpen && (
-          <div className="absolute left-0 right-0 top-full border-b border-white/10 bg-[#0c0d0f] px-5 py-5 shadow-2xl md:hidden">
-            <div className="mx-auto flex max-w-7xl flex-col gap-1">
-              {[
-                ["About", "#about"],
-                ["Projects", "#projects"],
-                ["Skills", "#skills"],
-                ["Contact", "#contact"],
-              ].map(([label, href]) => (
-                <a
-                  key={href}
-                  href={href}
-                  onClick={closeMenu}
-                  className="rounded-xl px-4 py-3 text-sm text-neutral-300 transition hover:bg-white/[0.05] hover:text-lime-300"
+                <div className="my-2 border-t border-white/10" />
+
+                <Link
+                  href="#contact"
+                  onClick={() => setMenuOpen(false)}
+                  className="block rounded-lg bg-lime-300 px-4 py-3 text-center text-sm font-semibold !text-black transition hover:bg-lime-200"
                 >
-                  {label}
-                </a>
-              ))}
-            </div>
+                  Let's Talk
+                </Link>
+              </div>
+            )}
           </div>
-        )}
+        </nav>
       </header>
 
-      {/* Hero */}
+
+
+      {/* HERO */}
       <section
-  id="home"
-  className="relative grid min-h-[calc(100vh-80px)] items-center gap-12 overflow-hidden px-5 py-20 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:px-12"
->
-  {/* Left column: Intro, buttons, and stats */}
-  <div className="relative z-10">
-    {/* Keep your existing hero heading and description here */}
-
-    {/* Keep your existing buttons here */}
-    <div className="flex flex-wrap items-center gap-4">
-      {/* Keep your existing Explore My Work button here */}
-
-      <a
-        href="/resume.pdf"
-        download
-        className="inline-flex items-center gap-2 rounded-full border border-lime-300/40 bg-white/[0.04] px-6 py-3.5 text-sm font-medium text-white transition hover:bg-lime-300/10 hover:border-lime-300"
+        id="home"
+        className="relative mx-auto grid min-h-[calc(100vh-80px)] max-w-7xl items-center gap-10 overflow-hidden px-5 py-16 sm:px-8 lg:grid-cols-2 lg:gap-12 lg:px-12 lg:py-20"
       >
-        <Download size={17} />
-        Download Resume
-      </a>
+        {/* Background glow */}
+        <div className="pointer-events-none absolute -left-40 top-20 h-96 w-96 rounded-full bg-lime-300/[0.04] blur-[120px]" />
 
-      <a
-        href="https://github.com/mdmahdi-dev"
-        target="_blank"
-        rel="noreferrer"
-        className="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-3.5 text-sm text-white transition hover:border-white/35 hover:bg-white/[0.04]"
-      >
-        <GithubIcon />
-        GitHub
-      </a>
-    </div>
-
-    {/* Stats */}
-    <div className="mt-14 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/[0.08] pt-6">
-      <div>
-        <p className="text-2xl font-medium tracking-tight">03</p>
-        <p className="mt-1 text-xs text-neutral-500">Featured projects</p>
-      </div>
-
-      <div className="h-12 w-px bg-white/10" />
-
-      <div>
-        <p className="text-2xl font-medium tracking-tight">React</p>
-        <p className="mt-1 text-xs text-neutral-500">Core technology</p>
-      </div>
-
-      <div className="h-12 w-px bg-white/10" />
-
-      <div>
-        <p className="text-2xl font-medium tracking-tight">Next.js</p>
-        <p className="mt-1 text-xs text-neutral-500">Building full-stack</p>
-      </div>
-    </div>
-  </div>
-
-  {/* Right column: Hero visual */}
-  <div className="relative mx-auto w-full max-w-[510px] lg:justify-self-end">
-  <div className="relative mx-auto aspect-square w-full max-w-[360px] overflow-hidden rounded-full border border-lime-300/30 bg-neutral-900 shadow-[0_0_70px_rgba(190,242,100,0.10)]">
-    <Image
-      src="/mahdi.jpeg"
-      alt="Mahdi — Web Developer"
-      fill
-      priority
-      sizes="(max-width: 768px) 80vw, 360px"
-      className="object-cover"
-    />
-  </div>
-
-  <p className="mt-5 text-center text-[10px] uppercase tracking-[0.3em] text-neutral-400">
-    Creative thinking · Clean code · Continuous growth
-  </p>
-</div>
-
-  {/* Scroll indicator */}
-  <a
-    href="#about"
-    className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-neutral-600 transition hover:text-lime-300 lg:flex"
-  >
-    Scroll to explore
-  </a>
-</section>
-
-      {/* About */ }
-  <section
-    id="about"
-    className="border-y border-white/[0.06] bg-[#0c0d0f] px-5 py-24 sm:px-8 lg:px-12"
-  >
-    <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
-      <div>
-        <p className="section-label">01 / ABOUT ME</p>
-        <h2 className="mt-5 text-4xl font-medium leading-tight tracking-[-0.05em] sm:text-5xl">
-          Curious by nature.
-          <br />
-          <span className="text-neutral-500">Builder by practice.</span>
-        </h2>
-      </div>
-
-      <div className="max-w-3xl">
-        <p className="text-lg leading-8 text-neutral-300">
-          I&apos;m a web developer focused on creating useful, accessible,
-          and visually polished digital experiences. My journey began
-          with the fundamentals of HTML, CSS, and JavaScript and has
-          grown into building applications with React and Next.js.
-        </p>
-        <p className="mt-5 leading-8 text-neutral-500">
-          I learn by building real projects, solving problems, and
-          improving my code with every iteration. My current focus is
-          strengthening my frontend skills and growing toward full-stack
-          development.
-        </p>
-
-        <a
-          href="https://linkedin.com/in/md-mahdi-16b825443"
-          target="_blank"
-          rel="noreferrer"
-          className="mt-8 inline-flex items-center gap-2 text-sm text-lime-300 transition hover:text-lime-200"
-        >
-          Connect on LinkedIn <ArrowUpRight size={16} />
-        </a>
-      </div>
-    </div>
-  </section>
-
-  {/* Projects */ }
-  <section
-    id="projects"
-    className="mx-auto max-w-7xl px-5 py-24 sm:px-8 lg:px-12 lg:py-32"
-  >
-    <div className="mb-12 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
-      <div>
-        <p className="section-label">02 / SELECTED WORK</p>
-        <h2 className="mt-5 text-4xl font-medium tracking-[-0.06em] sm:text-6xl">
-          Things I&apos;ve built<span className="text-lime-300">.</span>
-        </h2>
-      </div>
-      <p className="max-w-sm text-sm leading-7 text-neutral-500">
-        Real projects, real learning. Each one is an opportunity to solve
-        a problem and improve my development skills.
-      </p>
-    </div>
-
-    <div className="grid gap-7 md:grid-cols-2">
-      {projects.map((project, index) => (
-        <article
-          key={project.number}
-          className={`project-card group overflow-hidden rounded-3xl border border-white/[0.09] bg-[#0c0d0f] transition duration-500 hover:-translate-y-1 hover:border-lime-200/30 ${index === 0 ? "md:col-span-2" : ""
-            }`}
-        >
-          <a
-            href={project.href}
-            target="_blank"
-            rel="noreferrer"
-            className="block"
-            aria-label={`Open ${project.title}`}
-          >
-            <div
-              className={`relative overflow-hidden bg-gradient-to-br ${project.accent} ${index === 0
-                  ? "aspect-[16/8] sm:aspect-[16/7]"
-                  : "aspect-[16/10]"
-                }`}
-            >
-              <Image
-                src={project.image}
-                alt={`${project.title} website screenshot`}
-                fill
-                priority={index === 0}
-                sizes={
-                  index === 0
-                    ? "(max-width: 768px) 100vw, 90vw"
-                    : "(max-width: 768px) 100vw, 50vw"
-                }
-                className="object-cover object-top transition duration-700 group-hover:scale-[1.025]"
-              />
-
-              <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/5" />
-
-              <div className="absolute left-5 top-5 rounded-full border border-white/20 bg-black/40 px-3 py-1.5 text-[10px] uppercase tracking-[0.18em] text-white backdrop-blur-md">
-                {project.category}
-              </div>
-
-              <div className="absolute bottom-5 right-5 flex h-11 w-11 translate-y-2 items-center justify-center rounded-full bg-lime-300 text-[#10130b] opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                <ArrowUpRight size={20} />
-              </div>
-            </div>
-          </a>
-
-          <div className="p-6 sm:p-8">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="mb-2 text-[10px] uppercase tracking-[0.2em] text-neutral-600">
-                  PROJECT {project.number}
-                </p>
-                <h3 className="text-2xl font-medium tracking-tight transition group-hover:text-lime-300 sm:text-3xl">
-                  {project.title}
-                </h3>
-              </div>
-
-              <a
-                href={project.href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`Visit ${project.title}`}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/10 text-neutral-400 transition hover:border-lime-300 hover:text-lime-300"
-              >
-                <ArrowUpRight size={18} />
-              </a>
-            </div>
-
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-neutral-400">
-              {project.description}
-            </p>
-
-            <div className="mt-6 flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-white/[0.09] px-3 py-1.5 text-xs text-neutral-400"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
+        {/* LEFT: INTRODUCTION */}
+        <div className="relative z-10">
+          <div className="mb-7 inline-flex rounded-full border border-lime-300/50 px-5 py-2 text-sm text-lime-300">
+            Hello, I'm
           </div>
-        </article>
-      ))}
-    </div>
-  </section>
 
-  {/* Skills */ }
-  <section
-    id="skills"
-    className="border-y border-white/[0.06] bg-[#0c0d0f] px-5 py-24 sm:px-8 lg:px-12 lg:py-28"
-  >
-    <div className="mx-auto max-w-7xl">
-      <p className="section-label">03 / MY TOOLKIT</p>
-      <div className="mt-5 flex flex-col justify-between gap-5 md:flex-row md:items-end">
-        <h2 className="text-4xl font-medium tracking-[-0.06em] sm:text-6xl">
-          Tools for turning
-          <br />
-          ideas into reality<span className="text-lime-300">.</span>
-        </h2>
-        <p className="max-w-sm text-sm leading-7 text-neutral-500">
-          The technologies I use to build, test, and ship modern web
-          experiences — and the skills I continue to develop.
-        </p>
-      </div>
+          <h1 className="text-6xl font-bold tracking-[-0.06em] sm:text-7xl lg:text-8xl">
+            <span className="text-lime-300">M</span>ahdi
+          </h1>
 
-      <div className="mt-12 grid gap-4 md:grid-cols-3">
-        {skills.map((group, index) => (
-          <div
-            key={group.title}
-            className="rounded-2xl border border-white/[0.08] bg-[#08090b] p-6 transition hover:border-lime-200/25 sm:p-8"
-          >
-            <p className="text-xs text-neutral-600">
-              0{index + 1} / TOOLKIT
-            </p>
-            <h3 className="mt-4 text-xl font-medium">{group.title}</h3>
+          <h2 className="mt-3 text-4xl font-light tracking-tight sm:text-5xl">
+            Web <span className="font-semibold text-lime-300">Developer</span>
+          </h2>
 
-            <div className="mt-6 flex flex-wrap gap-2">
-              {group.items.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-lg bg-white/[0.045] px-3 py-2 text-sm text-neutral-300"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  {/* Contact */ }
-  <section
-    id="contact"
-    className="relative overflow-hidden px-5 py-28 sm:px-8 lg:px-12 lg:py-36"
-  >
-    <div className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-lime-300/[0.07] blur-[120px]" />
-
-    <div className="relative mx-auto max-w-4xl text-center">
-      <p className="section-label">04 / WHAT&apos;S NEXT?</p>
-      <h2 className="mt-6 text-5xl font-medium leading-[1.05] tracking-[-0.07em] sm:text-7xl">
-        Have an idea?
-        <br />
-        <span className="text-lime-300">Let&apos;s build it.</span>
-      </h2>
-      <p className="mx-auto mt-6 max-w-lg text-base leading-8 text-neutral-400">
-        I&apos;m always interested in connecting with developers,
-        collaborating on meaningful projects, and exploring new
-        opportunities.
-      </p>
-
-      <a
-        href="mailto:mdmahdi.dev@gmail.com"
-        className="mt-9 inline-flex items-center gap-3 rounded-full bg-lime-300 px-7 py-4 text-sm font-semibold text-[#10130b] transition hover:-translate-y-1 hover:bg-lime-200"
-      >
-        Get in touch <ArrowUpRight size={18} />
-      </a>
-
-      <p className="mt-4 text-xs text-neutral-600">
-        Replace the example email with your real contact email.
-      </p>
-    </div>
-  </section>
-
-  {/* Footer */}
-      <footer className="border-t border-white/[0.07] px-5 py-7 sm:px-8 lg:px-12">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 sm:flex-row">
-          <a href="#home" className="text-sm font-semibold tracking-wide">
-            MAHDI<span className="text-lime-300">.</span>
-          </a>
-
-          <p className="text-center text-xs text-neutral-600">
-            Designed with intention. Built with code.
+          <p className="mt-7 max-w-xl text-base leading-8 text-neutral-400 sm:text-lg">
+            I build modern, responsive and user-friendly web applications.
+            I'm passionate about turning ideas into real products using
+            modern technologies.
           </p>
 
-          <div className="flex items-center gap-5 text-neutral-400">
+          {/* HERO BUTTONS */}
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link
+              href="#projects"
+              className="inline-flex items-center gap-3 rounded-full bg-lime-300 px-6 py-4 text-sm font-semibold !text-black transition hover:-translate-y-1 hover:bg-lime-200"
+            >
+              <Code2 size={18} />
+              Explore My Work
+              <ArrowRight size={18} />
+            </Link>
+
+            <a
+              href="/resume.pdf"
+              download
+              className="inline-flex items-center gap-3 rounded-full border border-lime-300/60 px-6 py-4 text-sm font-medium text-white transition hover:bg-lime-300/10"
+            >
+              <Download size={18} />
+              Download Resume
+            </a>
+
+            <Link
+              href="#contact"
+              className="inline-flex items-center gap-3 rounded-full border border-white/15 px-6 py-4 text-sm font-medium text-white transition hover:border-lime-300 hover:text-lime-300"
+            >
+              <Mail size={18} />
+              Get in Touch
+            </Link>
+          </div>
+
+          {/* SOCIAL LINKS */}
+          <div className="mt-10 flex items-center gap-5 text-neutral-400">
             <a
               href="https://github.com/mdmahdi-dev"
               target="_blank"
@@ -543,125 +303,438 @@ export default function Home() {
               aria-label="GitHub"
               className="transition hover:text-lime-300"
             >
-              <GithubIcon />
+              <GithubIcon size={23} />
             </a>
+
+            <span className="h-6 w-px bg-white/15" />
+
             <a
-              href="https://linkedin.com/in/md-mahdi-16b825443"
+              href="https://linkedin.com/in/mdmahdi-dev"
               target="_blank"
               rel="noreferrer"
               aria-label="LinkedIn"
-              className="text-sm transition hover:text-lime-300"
-            >
-              in
-            </a>
-            <a
-              href="#home"
-              aria-label="Back to top"
               className="transition hover:text-lime-300"
             >
-              ↑
+              <LinkedinIcon size={23} />
+            </a>
+
+            <span className="h-6 w-px bg-white/15" />
+
+            <a
+              href="#contact"
+              aria-label="Email"
+              className="transition hover:text-lime-300"
+            >
+              <Mail size={23} />
             </a>
           </div>
         </div>
+
+        {/* RIGHT: LOGO + PORTRAIT */}
+        <div className="relative mx-auto flex w-full max-w-[540px] flex-col items-center lg:justify-self-end">
+          <div className="relative aspect-square w-full">
+            <HeroVisual />
+
+            <div className="absolute inset-x-0 bottom-0 z-10 mx-auto h-[96%] w-full max-w-[470px]">
+              <Image
+                src="/mahdi.png"
+                alt="Mahdi - Web Developer"
+                fill
+                priority
+                sizes="(max-width: 768px) 90vw, 470px"
+                className="object-contain object-bottom"
+              />
+            </div>
+          </div>
+
+          <p className="relative z-20 mt-3 text-center text-[10px] uppercase tracking-[0.2em] text-neutral-400 sm:text-xs">
+            Creative thinking
+            <span className="mx-2 text-lime-300">·</span>
+            Clean code
+            <span className="mx-2 text-lime-300">·</span>
+            Continuous growth
+          </p>
+        </div>
+
+        <Link
+          href="#about"
+          className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 items-center gap-3 text-[10px] uppercase tracking-[0.25em] text-neutral-500 transition hover:text-lime-300 lg:flex"
+        >
+          Scroll to explore <ArrowDown size={14} />
+        </Link>
+      </section>
+
+      {/* ABOUT */}
+      <section
+        id="about"
+        className="border-t border-white/[0.07] px-5 py-24 sm:px-8 lg:px-12"
+      >
+        <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
+          <div>
+            <SectionLabel number="01">A LITTLE ABOUT ME</SectionLabel>
+
+            <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
+              About <span className="text-lime-300">Me</span>
+            </h2>
+
+            <p className="mt-7 max-w-xl text-base leading-8 text-neutral-400">
+              I'm a passionate web developer who enjoys building clean,
+              efficient and scalable web applications. I love learning
+              new technologies and solving real-world problems with code.
+            </p>
+
+            <p className="mt-4 max-w-xl text-base leading-8 text-neutral-400">
+              My journey is driven by curiosity, consistent practice and
+              a commitment to becoming a better developer every day.
+            </p>
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2">
+            {/* EDUCATION CARD */}
+            <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-7 transition hover:border-lime-300/40">
+              <GraduationCap size={32} className="text-lime-300" />
+
+              <h3 className="mt-5 text-lg font-semibold">Education</h3>
+
+              <p className="mt-3 text-sm leading-7 text-neutral-400">
+                Master's Student in Economics
+                <br />
+                at MC College
+              </p>
+            </div>
+
+            {/* GOALS CARD */}
+            <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-7 transition hover:border-lime-300/40">
+              <Code2 size={32} className="text-lime-300" />
+
+              <h3 className="mt-5 text-lg font-semibold">Goals</h3>
+
+              <p className="mt-3 text-sm leading-7 text-neutral-400">
+                Full-Stack Software Developer
+                <br />
+                <span className="text-lime-300">→</span> Machine Learning Expert
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PROJECTS */}
+      <section
+        id="projects"
+        className="border-t border-white/[0.07] px-5 py-24 sm:px-8 lg:px-12"
+      >
+        <div className="mx-auto max-w-7xl">
+          <SectionLabel number="02">WHAT I'VE BUILT</SectionLabel>
+
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
+              Featured <span className="text-lime-300">Projects</span>
+            </h2>
+
+            <a
+              href="https://github.com/mdmahdi-dev"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-neutral-400 transition hover:text-lime-300"
+            >
+              More on GitHub <ArrowUpRight size={16} />
+            </a>
+          </div>
+
+          <div className="mt-12 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+            {projects.map((project) => (
+              <article
+                key={project.number}
+                className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:-translate-y-2 hover:border-lime-300/40"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden bg-neutral-900">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                  />
+                </div>
+
+                <div className="p-6">
+                  <p className="text-xs uppercase tracking-[0.2em] text-lime-300">
+                    {project.number} / {project.category}
+                  </p>
+
+                  <h3 className="mt-4 text-2xl font-semibold">
+                    {project.title}
+                  </h3>
+
+                  <p className="mt-3 min-h-20 text-sm leading-7 text-neutral-400">
+                    {project.description}
+                  </p>
+
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {project.technologies.map((technology) => (
+                      <span
+                        key={technology}
+                        className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-neutral-400"
+                      >
+                        {technology}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="mt-7 flex items-center gap-5 border-t border-white/10 pt-5">
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 text-sm text-lime-300 transition hover:text-lime-200"
+                    >
+                      Live Preview <ExternalLink size={15} />
+                    </a>
+
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 text-sm text-neutral-400 transition hover:text-white"
+                    >
+                      <GithubIcon size={16} /> GitHub
+                    </a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SKILLS */}
+<section
+  id="skills"
+  className="border-t border-white/[0.07] px-5 py-24 sm:px-8 lg:px-12"
+>
+  <div className="mx-auto max-w-7xl">
+    <SectionLabel number="03">MY TOOLKIT</SectionLabel>
+
+    <h2 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
+      Skills & <span className="text-lime-300">Technologies</span>
+    </h2>
+
+    <p className="mt-5 max-w-xl leading-8 text-neutral-400">
+      Technologies, frameworks and tools I use to build modern,
+      responsive and full-stack web applications.
+    </p>
+
+    {[
+      {
+        category: "Frontend Development",
+        description: "Building responsive and interactive user interfaces",
+        technologies: [
+          { name: "HTML5", icon: "html5/html5-original", color: "text-orange-400" },
+          { name: "CSS3", icon: "css3/css3-original", color: "text-blue-400" },
+          { name: "JavaScript", icon: "javascript/javascript-original", color: "text-yellow-300" },
+          { name: "TypeScript", icon: "typescript/typescript-original", color: "text-blue-400" },
+          { name: "React", icon: "react/react-original", color: "text-cyan-300" },
+          { name: "Next.js", icon: "nextjs/nextjs-original", color: "text-white" },
+          { name: "Tailwind CSS", icon: "tailwindcss/tailwindcss-original", color: "text-cyan-400" },
+          { name: "Vite", icon: "vitejs/vitejs-original", color: "text-purple-400" },
+        ],
+      },
+      {
+        category: "Backend & Database",
+        description: "Working with APIs, server-side logic and databases",
+        technologies: [
+          { name: "Node.js", icon: "nodejs/nodejs-original", color: "text-green-400" },
+          { name: "MongoDB", icon: "mongodb/mongodb-original", color: "text-green-500" },
+          { name: "PostgreSQL", icon: "postgresql/postgresql-original", color: "text-blue-400" },
+          { name: "REST API", icon: "api/api-original", color: "text-lime-300" },
+          { name: "JSON", icon: "json/json-original", color: "text-yellow-300" },
+        ],
+      },
+      {
+        category: "UI & Styling",
+        description: "Creating clean layouts and polished user experiences",
+        technologies: [
+          { name: "DaisyUI", icon: "daisyui/daisyui-original", color: "text-pink-400" },
+          { name: "Flexbox", icon: "css3/css3-original", color: "text-blue-400" },
+          { name: "CSS Grid", icon: "css3/css3-original", color: "text-purple-400" },
+          { name: "Responsive Design", icon: "html5/html5-original", color: "text-orange-400" },
+        ],
+      },
+      {
+        category: "Development Tools",
+        description: "Tools I use for development, version control and deployment",
+        technologies: [
+          { name: "Git", icon: "git/git-original", color: "text-orange-400" },
+          { name: "GitHub", icon: "github/github-original", color: "text-white" },
+          { name: "VS Code", icon: "vscode/vscode-original", color: "text-blue-400" },
+          { name: "Vercel", icon: "vercel/vercel-original", color: "text-white" },
+          { name: "npm", icon: "npm/npm-original-wordmark", color: "text-red-400" },
+        ],
+      },
+    ].map((group) => (
+      <div key={group.category} className="mt-12">
+        <div className="mb-6">
+          <h3 className="text-xl font-semibold text-white">
+            {group.category}
+          </h3>
+          <p className="mt-2 text-sm text-neutral-500">
+            {group.description}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+          {group.technologies.map((tech) => (
+            <div
+              key={tech.name}
+              className="group flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4 transition duration-300 hover:-translate-y-1 hover:border-lime-300/40 hover:bg-lime-300/[0.04]"
+            >
+              <img
+                src={`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${tech.icon}.svg`}
+                alt={`${tech.name} logo`}
+                className="h-9 w-9 shrink-0 object-contain"
+              />
+              <span className={`text-sm font-medium ${tech.color} transition group-hover:text-lime-300`}>
+                {tech.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+      {/* CONTACT */}
+      <section
+        id="contact"
+        className="relative scroll-mt-24 overflow-hidden border-t border-white/[0.07] px-5 py-28 sm:px-8 lg:px-12 lg:py-36"
+      >
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-lime-300/[0.07] blur-[120px]" />
+
+        <div className="relative mx-auto max-w-3xl">
+          <SectionLabel number="04">GET IN TOUCH</SectionLabel>
+
+          <h2 className="mt-6 text-5xl font-bold tracking-tight sm:text-6xl">
+            Send a Direct <span className="text-lime-300">Message</span>
+          </h2>
+
+          <p className="mt-5 leading-8 text-neutral-400">
+            Fill out the form below and I'll respond as soon as possible.
+          </p>
+
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+
+              const form = event.currentTarget;
+              const formData = new FormData(form);
+
+              const name = String(formData.get("name"));
+              const email = String(formData.get("email"));
+              const subject = String(formData.get("subject") || "Portfolio Contact");
+              const message = String(formData.get("message"));
+
+              const emailSubject = encodeURIComponent(subject);
+              const emailBody = encodeURIComponent(
+                `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+              );
+
+              window.location.href =
+                `mailto:mdmahdi.dev@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+            }}
+            className="mt-10 space-y-6"
+          >
+            <div>
+              <label htmlFor="name" className="mb-2 block text-sm font-medium text-white">
+                Your name *
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                placeholder="Enter your name"
+                className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white outline-none transition placeholder:text-neutral-600 focus:border-lime-300"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" className="mb-2 block text-sm font-medium text-white">
+                Email address *
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                placeholder="Enter your email address"
+                className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white outline-none transition placeholder:text-neutral-600 focus:border-lime-300"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="subject" className="mb-2 block text-sm font-medium text-white">
+                Subject / role
+              </label>
+              <input
+                id="subject"
+                name="subject"
+                type="text"
+                placeholder="e.g. Project Collaboration"
+                className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white outline-none transition placeholder:text-neutral-600 focus:border-lime-300"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="message" className="mb-2 block text-sm font-medium text-white">
+                Your message *
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                required
+                rows={6}
+                placeholder="Write your message here..."
+                className="w-full resize-y rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4 text-white outline-none transition placeholder:text-neutral-600 focus:border-lime-300"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="inline-flex items-center gap-3 rounded-full bg-lime-300 px-7 py-4 text-sm font-semibold !text-black transition hover:-translate-y-1 hover:bg-lime-200"
+            >
+              <Mail size={18} />
+              Send Message
+              <ArrowUpRight size={18} />
+            </button>
+          </form>
+
+          <p className="mt-6 text-sm text-neutral-500">
+            This opens your email app with your message ready to send.
+          </p>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="border-t border-white/[0.07] px-5 py-8 sm:px-8 lg:px-12">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
+          <Link href="#home" className="text-lg font-bold">
+            Mahdi<span className="text-lime-300">.</span>
+          </Link>
+
+          <p className="text-xs text-neutral-500">
+            © {new Date().getFullYear()} Mahdi. Built with Next.js & Tailwind CSS.
+          </p>
+
+          <Link
+            href="#home"
+            className="inline-flex items-center gap-2 text-xs text-neutral-400 transition hover:text-lime-300"
+          >
+            Back to top <ArrowUpRight size={14} />
+          </Link>
+        </div>
       </footer>
-
-      <style jsx global>{`
-        html {
-          scroll-behavior: smooth;
-          scroll-padding-top: 24px;
-        }
-
-        body {
-          background: #08090b;
-        }
-
-        .section-label {
-          color: #bef264;
-          font-size: 10px;
-          font-weight: 500;
-          letter-spacing: 0.24em;
-        }
-
-        .nav-link {
-          color: #a3a3a3;
-          font-size: 13px;
-          transition: color 200ms ease;
-        }
-
-        .nav-link:hover {
-          color: #bef264;
-        }
-
-        .hero-orbit {
-          animation: orbit 32s linear infinite;
-        }
-
-        .hero-orb {
-          animation: orb-float 7s ease-in-out infinite;
-        }
-
-        .hero-glow {
-          animation: glow-pulse 5s ease-in-out infinite;
-        }
-
-        .float-card {
-          animation: float 6s ease-in-out infinite;
-        }
-
-        .float-card-delayed {
-          animation: float 7s ease-in-out -2s infinite;
-        }
-
-        @keyframes orbit {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
-        }
-
-        @keyframes orb-float {
-          0%,
-          100% {
-            transform: translate(-50%, -50%) scale(1);
-          }
-          50% {
-            transform: translate(-50%, calc(-50% - 10px)) scale(1.025);
-          }
-        }
-
-        @keyframes glow-pulse {
-          0%,
-          100% {
-            opacity: 0.55;
-          }
-          50% {
-            opacity: 1;
-          }
-        }
-
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-9px);
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          *,
-          *::before,
-          *::after {
-            scroll-behavior: auto !important;
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-          }
-        }
-      `}</style>
     </main>
   );
 }
